@@ -101,12 +101,28 @@ Comparing the [spec](file:///home/scumpc/Dev/task-tracker/spec.md) against the c
 
 ---
 
+### Branch 1.5: `feature/ci`
+**Goal:** Set up GitHub Actions CI and PR workflow.
+
+#### [NEW] [test.yml](file:///home/scumpc/Dev/task-tracker/.github/workflows/test.yml)
+- Triggers on push and PR to `master`
+- Sets up Python 3.12, installs `uv`, runs `uv sync`, runs `uv run pytest tests/ -v`
+
+#### GitHub Settings
+- Enable branch protection on `master`: require CI pass + PR before merge
+
+> [!NOTE]
+> After this branch, all future branches go through PRs with automated test checks.
+
+---
+
 ## Suggested Branch Order
 
 ```mermaid
 graph LR
-    A[main] --> T[feature/tests]
-    T --> B[feature/ux-feedback]
+    A[master] --> T[feature/tests]
+    T --> CI[feature/ci]
+    CI --> B[feature/ux-feedback]
     B --> C[feature/timestamps]
     C --> D[feature/mark-commands]
     D --> E[feature/list-filter]
@@ -114,8 +130,9 @@ graph LR
 ```
 
 > [!IMPORTANT]
-> **`feature/ux-feedback` should go first** — it changes return types in `service.py` that other branches depend on.
-> **`feature/timestamps`** should go second — it modifies the model, and later branches should work with the updated model.
+> **`feature/ci`** goes right after tests — so all subsequent branches get automated checking.
+> **`feature/ux-feedback`** changes return types in `service.py` that other branches depend on.
+> **`feature/timestamps`** modifies the model, and later branches should work with the updated model.
 
 ## Verification Plan
 
