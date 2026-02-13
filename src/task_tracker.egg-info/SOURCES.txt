@@ -12,3 +12,4 @@ src/task_tracker.egg-info/entry_points.txt
 src/task_tracker.egg-info/requires.txt
 src/task_tracker.egg-info/top_level.txt
 tests/test_main.py
+tests/test_service.py

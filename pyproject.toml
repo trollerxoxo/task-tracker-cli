@@ -11,3 +11,10 @@ dependencies = [
 ]
 [project.scripts]
 task-cli = "task_cli.main:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
+[tool.hatch.build.targets.wheel]
+packages = ["src/task_cli"]
