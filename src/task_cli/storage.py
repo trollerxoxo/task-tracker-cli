@@ -16,4 +16,4 @@ def load_tasks() -> List[Task]:
 
 def save_tasks(tasks: List[Task]) -> None:
     with open(DATA_FILE, "w") as f:
-        json.dump([task.model_dump() for task in tasks], f, indent=4)
+        json.dump([task.model_dump(mode='json') for task in tasks], f, indent=4)

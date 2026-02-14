@@ -20,3 +20,11 @@ build/
 .agent/
 agent.md
 IMPLEMENTATION_PLAN.md
+
+# Data
+*.json
+!pyproject.toml
+
+# OS
+.DS_Store
+Thumbs.db
