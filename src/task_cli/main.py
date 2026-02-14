@@ -5,6 +5,7 @@ from .models import Status
 from rich import print
 from rich.table import Table
 
+
 app = typer.Typer()
 
 @app.command("add")
@@ -32,10 +33,16 @@ def list_tasks(status: Annotated[Optional[Status], typer.Option()] = None):
     table = Table(title="Tasks")
     table.add_column("ID", justify="right", style="cyan", no_wrap=True)
     table.add_column("Description", style="magenta")
-    table.add_column("Status", justify="right", style="green")
+    table.add_column("Status", justify="right", style="green")  
+    table.add_column("Created", justify="right", style="green")
+    table.add_column("Updated", justify="right", style="green")
     tasks = service.get_tasks(status=status)
     for task in tasks:
-        table.add_row(str(task.id), task.description, task.status)
+        table.add_row(str(task.id), 
+        task.description, 
+        task.status, 
+        task.created_at.strftime("%Y-%m-%d %H:%M"), 
+        task.updated_at.strftime("%Y-%m-%d %H:%M"))
     print(table)
 
 @app.command("mark-done")

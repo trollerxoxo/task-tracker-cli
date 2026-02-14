@@ -86,3 +86,17 @@ def test_update_non_existent_task_raises_error(tmp_path, monkeypatch):
     monkeypatch.setattr("task_cli.storage.DATA_FILE", tmp_path / "tasks.json")
     with pytest.raises(ValueError):
         update_task(999, "Learn Python", Status.DONE)
+
+def test_created_at_and_updated_at_are_set(tmp_path, monkeypatch):
+    monkeypatch.setattr("task_cli.storage.DATA_FILE", tmp_path / "tasks.json")
+    add_task("Buy groceries")
+    tasks = get_tasks()
+    assert tasks[0].created_at is not None
+    assert tasks[0].updated_at is not None
+
+def test_updated_at_is_updated(tmp_path, monkeypatch):
+    monkeypatch.setattr("task_cli.storage.DATA_FILE", tmp_path / "tasks.json")
+    add_task("Buy groceries")
+    update_task(1, "Learn Python")
+    tasks = get_tasks()
+    assert tasks[0].updated_at > tasks[0].created_at

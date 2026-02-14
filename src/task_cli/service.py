@@ -1,7 +1,7 @@
 from .storage import load_tasks, save_tasks
 from .models import Task, Status
 from typing import List
-
+from datetime import datetime
 
 def add_task(description: str) -> Task:
     tasks = load_tasks()
@@ -41,5 +41,6 @@ def update_task(task_id: int, description: str | None = None, status: Status | N
         task_to_update.description = description
     if status:
         task_to_update.status = status
+    task_to_update.updated_at = datetime.now()
     save_tasks(tasks)
     return task_to_update

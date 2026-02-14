@@ -2,6 +2,7 @@ from typer.testing import CliRunner
 from task_cli.main import app
 import pytest
 from task_cli.service import add_task, get_tasks, delete_task, update_task
+from datetime import datetime
 
 runner = CliRunner()
 
@@ -96,3 +97,13 @@ def test_mark_in_progress_command(tmp_path, monkeypatch):
     assert result.exit_code == 0
     assert "Task marked as in-progress: (ID: 1) (Status: in-progress)" in result.output
 
+def test_list_shows_created_at(tmp_path, monkeypatch):
+    monkeypatch.setattr("task_cli.storage.DATA_FILE", tmp_path / "tasks.json")
+    runner.invoke(app, ["add", "Buy groceries"])
+    result = runner.invoke(app, ["list"])
+    assert result.exit_code == 0
+    assert "Buy groceries" in result.output
+    assert "todo" in result.output
+    assert "1" in result.output
+    today = datetime.now().strftime("%Y-%m-%d %H:%M")
+    assert today in result.output
