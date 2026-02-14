@@ -1,6 +1,6 @@
-# Task Tracker CLI
+# Task Tracker CLI https://roadmap.sh/projects/task-tracker
 
-A command-line task management tool built with Python, Typer, and Rich.
+A command-line task management tool built with Python, Typer, and Rich. 
 
 ## Installation
 
