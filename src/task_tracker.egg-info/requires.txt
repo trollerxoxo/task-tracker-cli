@@ -1,3 +1,0 @@
-rich>=14.3.2
-sqlmodel>=0.0.32
-typer[all]>=0.21.1

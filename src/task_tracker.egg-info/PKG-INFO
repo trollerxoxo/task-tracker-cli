@@ -1,9 +1,0 @@
-Metadata-Version: 2.4
-Name: task-tracker
-Version: 0.1.0
-Summary: Add your description here
-Requires-Python: >=3.12
-Description-Content-Type: text/markdown
-Requires-Dist: rich>=14.3.2
-Requires-Dist: sqlmodel>=0.0.32
-Requires-Dist: typer[all]>=0.21.1
