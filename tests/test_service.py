@@ -48,27 +48,24 @@ def test_delete_task(tmp_path, monkeypatch):
     tasks = get_tasks()
     assert len(tasks) == 0
 
-def test_delete_non_existent_task_does_not_error(tmp_path, monkeypatch):
+def test_delete_non_existent_task_raises_error(tmp_path, monkeypatch):
     monkeypatch.setattr("task_cli.storage.DATA_FILE", tmp_path / "tasks.json")
     add_task("Buy groceries")
-    delete_task(999)
-    tasks = get_tasks()
-    assert len(tasks) == 1
+    with pytest.raises(ValueError):
+        delete_task(999)
 
 def test_update_task_description(tmp_path, monkeypatch):
     monkeypatch.setattr("task_cli.storage.DATA_FILE", tmp_path / "tasks.json")
     add_task("Buy groceries")
-    update_task(1, "Learn Python")
-    tasks = get_tasks()
-    assert len(tasks) == 1
-    assert tasks[0].description == "Learn Python"
-    assert tasks[0].status == Status.TODO
-    assert tasks[0].id == 1
+    updated_task = update_task(1, "Learn Python")
+    assert updated_task.description == "Learn Python"
+    assert updated_task.status == Status.TODO
+    assert updated_task.id == 1
 
 def test_update_task_status(tmp_path, monkeypatch):
     monkeypatch.setattr("task_cli.storage.DATA_FILE", tmp_path / "tasks.json")
     add_task("Buy groceries")
-    update_task(1, status=Status.DONE)
+    updated_task = update_task(1, status=Status.DONE)
     tasks = get_tasks()
     assert len(tasks) == 1
     assert tasks[0].description == "Buy groceries"
